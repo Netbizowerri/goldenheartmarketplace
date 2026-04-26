@@ -24,10 +24,6 @@ import { Toaster } from "sonner";
 import { SiteContentProvider, useSiteContent } from "@/src/providers/SiteContentProvider";
 import { PageState } from "@/src/components/ui/PageState";
 
-const AdminDashboard = React.lazy(() =>
-  import("@/src/components/AdminDashboard").then((module) => ({ default: module.AdminDashboard })),
-);
-
 function LandingPage() {
   const { content, isLoading, error, retry } = useSiteContent();
 
@@ -70,16 +66,6 @@ function LandingPage() {
 }
 
 export default function App() {
-  const isAdminPath = typeof window !== "undefined" && window.location.pathname === "/admin-ghm-portal";
-
-  if (isAdminPath) {
-    return (
-      <React.Suspense fallback={<PageState title="Loading dashboard" message="Preparing the admin dashboard." />}>
-        <AdminDashboard />
-      </React.Suspense>
-    );
-  }
-
   return (
     <SiteContentProvider>
       <LandingPage />
