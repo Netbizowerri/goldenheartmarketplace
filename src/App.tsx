@@ -21,54 +21,33 @@ import { Footer } from "@/src/components/sections/Footer";
 import { FloatingWhatsApp } from "@/src/components/FloatingWhatsApp";
 import { StickyCTABar } from "@/src/components/StickyCTABar";
 import { Toaster } from "sonner";
-import { SiteContentProvider, useSiteContent } from "@/src/providers/SiteContentProvider";
-import { PageState } from "@/src/components/ui/PageState";
-
-function LandingPage() {
-  const { content, isLoading, error, retry } = useSiteContent();
-
-  if (isLoading) {
-    return <PageState title="Loading page" message="We are loading the latest marketplace content." />;
-  }
-
-  if (error) {
-    return <PageState title="Page unavailable" message={error} actionLabel="Try again" onAction={() => void retry()} />;
-  }
-
-  if (!content) {
-    return <PageState title="No content available" message="The landing page content is empty right now." actionLabel="Reload" onAction={() => void retry()} />;
-  }
-
-  return (
-    <div className="min-h-screen bg-white bg-line-pattern">
-      <Navbar />
-      <main>
-        <HeroSection />
-        <TrustBadges />
-        <ProductsSection />
-        <WhyJoinSection />
-        <HowItWorksSection />
-        <DeliverySection />
-        <WhoCanJoinSection />
-        <WhatsAppJoinSection />
-        <TestimonialsSection />
-        <FinalCTABanner />
-        <SignUpForm />
-        <AppDownloadsSection />
-      </main>
-      <Footer />
-
-      <FloatingWhatsApp />
-      <StickyCTABar />
-      <Toaster position="top-center" richColors />
-    </div>
-  );
-}
+import { SiteContentProvider } from "@/src/providers/SiteContentProvider";
 
 export default function App() {
   return (
     <SiteContentProvider>
-      <LandingPage />
+      <div className="min-h-screen bg-white bg-line-pattern">
+        <Navbar />
+        <main>
+          <HeroSection />
+          <TrustBadges />
+          <ProductsSection />
+          <WhyJoinSection />
+          <HowItWorksSection />
+          <DeliverySection />
+          <WhoCanJoinSection />
+          <WhatsAppJoinSection />
+          <TestimonialsSection />
+          <FinalCTABanner />
+          <SignUpForm />
+          <AppDownloadsSection />
+        </main>
+        <Footer />
+
+        <FloatingWhatsApp />
+        <StickyCTABar />
+        <Toaster position="top-center" richColors />
+      </div>
     </SiteContentProvider>
   );
 }

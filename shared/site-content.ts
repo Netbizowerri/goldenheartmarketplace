@@ -54,7 +54,7 @@ export interface SiteContent {
   testimonials: Testimonial[];
 }
 
-const DEFAULT_SITE_CONTENT: SiteContent = {
+export const SITE_CONTENT: SiteContent = {
   companyName: "GoldenHeart Marketplace",
   companyEmail: "support@example.com",
   facebookUrl: "https://www.facebook.com/",
@@ -187,18 +187,18 @@ const DEFAULT_SITE_CONTENT: SiteContent = {
 
 export function buildSiteContent(env: NodeJS.ProcessEnv): SiteContent {
   return {
-    ...DEFAULT_SITE_CONTENT,
-    companyName: env.PUBLIC_COMPANY_NAME || DEFAULT_SITE_CONTENT.companyName,
-    companyEmail: env.PUBLIC_COMPANY_EMAIL || DEFAULT_SITE_CONTENT.companyEmail,
-    facebookUrl: env.PUBLIC_FACEBOOK_URL || DEFAULT_SITE_CONTENT.facebookUrl,
-    whatsappGroupUrl: env.PUBLIC_WHATSAPP_GROUP_URL || DEFAULT_SITE_CONTENT.whatsappGroupUrl,
-    heroLogoUrl: env.PUBLIC_HERO_LOGO_URL || DEFAULT_SITE_CONTENT.heroLogoUrl,
-    deliveryImageUrl: env.PUBLIC_DELIVERY_IMAGE_URL || DEFAULT_SITE_CONTENT.deliveryImageUrl,
-    communityImageUrl: env.PUBLIC_COMMUNITY_IMAGE_URL || DEFAULT_SITE_CONTENT.communityImageUrl,
-    merchantCountLabel: env.PUBLIC_MERCHANT_COUNT_LABEL || DEFAULT_SITE_CONTENT.merchantCountLabel,
-    merchantCountValue: env.PUBLIC_MERCHANT_COUNT_VALUE || DEFAULT_SITE_CONTENT.merchantCountValue,
-    joinCountLabel: env.PUBLIC_JOIN_COUNT_LABEL || DEFAULT_SITE_CONTENT.joinCountLabel,
-    revenueGrowthStat: env.PUBLIC_REVENUE_GROWTH_STAT || DEFAULT_SITE_CONTENT.revenueGrowthStat,
-    revenueGrowthLabel: env.PUBLIC_REVENUE_GROWTH_LABEL || DEFAULT_SITE_CONTENT.revenueGrowthLabel,
+    ...SITE_CONTENT,
+    companyName: env.PUBLIC_COMPANY_NAME || SITE_CONTENT.companyName,
+    companyEmail: env.PUBLIC_COMPANY_EMAIL || SITE_CONTENT.companyEmail,
+    facebookUrl: env.PUBLIC_FACEBOOK_URL || SITE_CONTENT.facebookUrl,
+    whatsappGroupUrl: env.PUBLIC_WHATSAPP_GROUP_URL || SITE_CONTENT.whatsappGroupUrl,
+    heroLogoUrl: env.PUBLIC_HERO_LOGO_URL || SITE_CONTENT.heroLogoUrl,
+    deliveryImageUrl: env.PUBLIC_DELIVERY_IMAGE_URL || SITE_CONTENT.deliveryImageUrl,
+    communityImageUrl: env.PUBLIC_COMMUNITY_IMAGE_URL || SITE_CONTENT.communityImageUrl,
+    merchantCountLabel: env.PUBLIC_MERCHANT_COUNT_LABEL || SITE_CONTENT.merchantCountLabel,
+    merchantCountValue: env.PUBLIC_MERCHANT_COUNT_VALUE || SITE_CONTENT.merchantCountValue,
+    joinCountLabel: env.PUBLIC_JOIN_COUNT_LABEL || SITE_CONTENT.joinCountLabel,
+    revenueGrowthStat: env.PUBLIC_REVENUE_GROWTH_STAT || SITE_CONTENT.revenueGrowthStat,
+    revenueGrowthLabel: env.PUBLIC_REVENUE_GROWTH_LABEL || SITE_CONTENT.revenueGrowthLabel,
   };
 }
