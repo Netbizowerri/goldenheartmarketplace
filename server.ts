@@ -1,6 +1,5 @@
 import express from "express";
 import { createServer as createViteServer } from "vite";
-import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
 import dotenv from "dotenv";
@@ -42,7 +41,6 @@ app.get("/api/site-content", (_req, res) => {
 app.post("/api/submit-lead", async (req, res) => {
   const { fullName, businessName, email, phone, businessType, country } = req.body;
 
-  // Basic validation
   if (!fullName || !businessName || !email || !phone || !businessType || !country) {
     return res.status(400).json({
       success: false,
@@ -62,7 +60,6 @@ app.post("/api/submit-lead", async (req, res) => {
   }
 
   try {
-    // Build payload for Privyr webhook
     const displayName = fullName.trim().split(/\s+/)[0] || fullName;
     const privyrPayload = {
       name: fullName,
@@ -78,7 +75,6 @@ app.post("/api/submit-lead", async (req, res) => {
       },
     };
 
-    // Send to Privyr webhook
     await axios.post(privyrUrl, privyrPayload, {
       headers: {
         "Content-Type": "application/json",
@@ -96,6 +92,8 @@ app.post("/api/submit-lead", async (req, res) => {
     });
   }
 });
+
+let appInstance: express.Express | null = null;
 
 async function createExpressApp() {
   if (process.env.NODE_ENV !== "production") {
@@ -115,10 +113,13 @@ async function createExpressApp() {
   return app;
 }
 
-// For Vercel serverless functions
-export default createExpressApp;
+export default async function handler(req: any, res: any) {
+  if (!appInstance) {
+    appInstance = await createExpressApp();
+  }
+  appInstance(req, res);
+}
 
-// For local development
 if (process.env.NODE_ENV !== "test") {
   createExpressApp().then(app => {
     app.listen(PORT, "0.0.0.0", () => {
