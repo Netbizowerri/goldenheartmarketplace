@@ -1,5 +1,4 @@
 import express from "express";
-import { createServer as createViteServer } from "vite";
 import path from "path";
 import { fileURLToPath } from "url";
 import dotenv from "dotenv";
@@ -97,23 +96,24 @@ let appInstance: express.Express | null = null;
 
 async function createExpressApp() {
   if (process.env.NODE_ENV !== "production") {
-    const vite = await createViteServer({
+    const { createServer } = await import("vite");
+    const vite = await createServer({
       server: { middlewareMode: true },
       appType: "spa",
     });
     app.use(vite.middlewares);
-   } else {
-     const distPath = path.join(__dirname, "dist");
-     app.use(express.static(distPath));
-     app.get("*", (_req, res) => {
-       res.sendFile(path.join(distPath, "index.html"), (err: any) => {
-         if (err) {
-           writeLog("ERROR", "Failed to serve index.html from dist", err);
-           res.status(500).json({ error: "Server configuration error" });
-         }
-       });
-     });
-   }
+  } else {
+    const distPath = path.join(process.cwd(), "dist");
+    app.use(express.static(distPath));
+    app.get("*", (_req, res) => {
+      res.sendFile(path.join(distPath, "index.html"), (err: any) => {
+        if (err) {
+          writeLog("ERROR", "Failed to serve index.html from dist", err);
+          res.status(500).json({ error: "Server configuration error" });
+        }
+      });
+    });
+  }
 
   return app;
 }
