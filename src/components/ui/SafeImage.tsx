@@ -36,5 +36,5 @@ export function SafeImage({
     );
   }
 
-  return <img {...props} alt={alt} className={className} src={src} onError={() => setHasError(true)} />;
+  return <img {...props} alt={alt} className={className} src={src} onError={() => setHasError(true)} referrerPolicy="no-referrer" />;
 }
