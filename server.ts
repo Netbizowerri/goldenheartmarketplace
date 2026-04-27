@@ -102,13 +102,18 @@ async function createExpressApp() {
       appType: "spa",
     });
     app.use(vite.middlewares);
-  } else {
-    const distPath = path.join(process.cwd(), "dist");
-    app.use(express.static(distPath));
-    app.get("*", (_req, res) => {
-      res.sendFile(path.join(distPath, "index.html"));
-    });
-  }
+   } else {
+     const distPath = path.join(__dirname, "dist");
+     app.use(express.static(distPath));
+     app.get("*", (_req, res) => {
+       res.sendFile(path.join(distPath, "index.html"), (err: any) => {
+         if (err) {
+           writeLog("ERROR", "Failed to serve index.html from dist", err);
+           res.status(500).json({ error: "Server configuration error" });
+         }
+       });
+     });
+   }
 
   return app;
 }
@@ -120,10 +125,13 @@ export default async function handler(req: any, res: any) {
   appInstance(req, res);
 }
 
-if (process.env.NODE_ENV !== "test") {
+if (process.env.NODE_ENV === "development") {
   createExpressApp().then(app => {
     app.listen(PORT, "0.0.0.0", () => {
       writeLog("INFO", `Server running at http://localhost:${PORT}`);
     });
+  }).catch(err => {
+    writeLog("ERROR", "Failed to start dev server", err);
+    throw err;
   });
 }
