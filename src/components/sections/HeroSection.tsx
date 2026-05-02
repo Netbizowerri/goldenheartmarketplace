@@ -35,7 +35,7 @@ export const HeroSection = () => {
             </div>
 
             <h1 className="text-[2.25rem] sm:text-5xl md:text-8xl font-black mb-6 md:mb-8 leading-[1.05] md:leading-[0.9] tracking-tighter text-soft-black text-center sm:text-left">
-              GROW YOUR <br className="sm:hidden"/><span className="text-gold">BUSINESS</span> <br className="hidden sm:block"/>WITH <span className="text-soft-black">GOLDENHEART.</span>
+              GROW YOUR <br className="sm:hidden" /><span className="text-gold">BUSINESS</span> <br className="hidden sm:block" />WITH <span className="text-soft-black">GOLDENHEART.</span>
             </h1>
 
             <p className="text-base md:text-xl text-medium-grey mb-8 md:mb-10 max-w-lg leading-relaxed text-center sm:text-left">
@@ -61,7 +61,7 @@ export const HeroSection = () => {
                   <span className="flex h-2 w-2 rounded-full bg-gold animate-pulse" />
                   Takes less than 2 minutes to get started
                 </p>
-                
+
                 <div className="flex items-center justify-center sm:justify-start gap-4">
                   <div className="flex -space-x-3">
                     {[1, 2, 3].map((i) => (
@@ -113,7 +113,7 @@ export const HeroSection = () => {
                 {/* Account Summary Card */}
                 <div className="bg-white/5 rounded-2xl p-4 border border-white/10 mb-6">
                   <p className="text-[10px] text-gray-500 font-black uppercase tracking-widest mb-1">Store Revenue</p>
-                  <p className="text-2xl font-black text-white">$12,840.50</p>
+                  <p className="text-2xl font-black text-white">₦12,840.50</p>
                   <div className="mt-2 text-[10px] text-green-500 font-bold flex items-center gap-1">
                     <span>↑ 12% Growth</span>
                   </div>
@@ -150,28 +150,28 @@ export const HeroSection = () => {
 
                 {/* App Navigation Bar */}
                 <div className="mt-auto h-12 bg-white/5 -mx-5 -mb-5 flex items-center justify-around px-4 border-t border-white/10">
-                   <div className="w-5 h-5 bg-gold rounded-md" />
-                   <div className="w-5 h-5 bg-white/10 rounded-md" />
-                   <div className="w-5 h-5 bg-white/10 rounded-md" />
-                   <div className="w-5 h-5 bg-white/10 rounded-md" />
+                  <div className="w-5 h-5 bg-gold rounded-md" />
+                  <div className="w-5 h-5 bg-white/10 rounded-md" />
+                  <div className="w-5 h-5 bg-white/10 rounded-md" />
+                  <div className="w-5 h-5 bg-white/10 rounded-md" />
                 </div>
               </div>
             </div>
 
             {/* Decorative Floating Objects */}
-            <motion.div 
-               animate={{ y: [0, -20, 0] }}
-               transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-               className="absolute top-20 -left-4 sm:-left-10 w-12 h-12 sm:w-16 sm:h-16 bg-white/80 backdrop-blur-md rounded-2xl border border-white/20 shadow-xl flex items-center justify-center text-xl sm:text-2xl z-20"
+            <motion.div
+              animate={{ y: [0, -20, 0] }}
+              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+              className="absolute top-20 -left-4 sm:-left-10 w-12 h-12 sm:w-16 sm:h-16 bg-white/80 backdrop-blur-md rounded-2xl border border-white/20 shadow-xl flex items-center justify-center text-xl sm:text-2xl z-20"
             >
-               🥇
+              🥇
             </motion.div>
-            <motion.div 
-               animate={{ y: [0, 20, 0] }}
-               transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-               className="absolute bottom-20 -right-4 sm:-right-10 w-16 h-16 sm:w-20 sm:h-20 bg-white rounded-2xl sm:rounded-3xl shadow-gold/20 shadow-2xl flex items-center justify-center z-20 border-2 sm:border-4 border-white p-2"
+            <motion.div
+              animate={{ y: [0, 20, 0] }}
+              transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+              className="absolute bottom-20 -right-4 sm:-right-10 w-16 h-16 sm:w-20 sm:h-20 bg-white rounded-2xl sm:rounded-3xl shadow-gold/20 shadow-2xl flex items-center justify-center z-20 border-2 sm:border-4 border-white p-2"
             >
-               <SafeImage src={content?.heroLogoUrl} alt="Logo" className="w-full h-full object-contain" fallbackLabel="Logo" referrerPolicy="no-referrer" />
+              <SafeImage src={content?.heroLogoUrl} alt="Logo" className="w-full h-full object-contain" fallbackLabel="Logo" referrerPolicy="no-referrer" />
             </motion.div>
 
             {/* Background Decorative Elements */}

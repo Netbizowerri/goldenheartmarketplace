@@ -13,7 +13,7 @@ const SiteContentContext = React.createContext<SiteContentContextValue | undefin
 
 // Helper to extract relevant VITE_ environment variables overriding site content
 function getMergedContent(): SiteContent {
-  const env = import.meta.env || {};
+  const env = import.meta.env;
   return {
     ...SITE_CONTENT,
     companyName: env.VITE_COMPANY_NAME || env.PUBLIC_COMPANY_NAME || SITE_CONTENT.companyName,

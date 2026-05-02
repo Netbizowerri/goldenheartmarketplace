@@ -13,8 +13,17 @@ import { useSiteContent } from "@/src/providers/SiteContentProvider";
 import { leadSchema, type LeadInput } from "@/shared/schemas";
 
 async function readResponseMessage(response: Response) {
-  const payload = await response.json().catch(() => null);
-  return payload?.error || payload?.message || "Submission failed";
+  try {
+    const contentType = response.headers.get("content-type");
+    if (contentType && contentType.includes("application/json")) {
+      const payload = await response.json();
+      return payload?.error || payload?.message || "Submission failed";
+    }
+    const text = await response.text();
+    return text.substring(0, 200) || "Submission failed";
+  } catch {
+    return "Submission failed";
+  }
 }
 
 export const SignUpForm = () => {
