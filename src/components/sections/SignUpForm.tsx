@@ -12,6 +12,12 @@ import { SuccessModal } from "@/src/components/ui/SuccessModal";
 import { useSiteContent } from "@/src/providers/SiteContentProvider";
 import { leadSchema, type LeadInput } from "@/shared/schemas";
 
+type SubmitApiResponse = {
+  success?: boolean;
+  message?: string;
+  error?: string;
+};
+
 async function readResponseMessage(response: Response) {
   try {
     const contentType = response.headers.get("content-type");
@@ -24,6 +30,64 @@ async function readResponseMessage(response: Response) {
   } catch {
     return "Submission failed";
   }
+}
+
+async function readApiPayload(response: Response): Promise<SubmitApiResponse | null> {
+  try {
+    const contentType = response.headers.get("content-type") || "";
+    if (!contentType.includes("application/json")) {
+      return null;
+    }
+
+    return (await response.json()) as SubmitApiResponse;
+  } catch {
+    return null;
+  }
+}
+
+function getSubmitEndpoints() {
+  const configuredEndpoint = import.meta.env.VITE_FORM_ENDPOINT?.trim();
+
+  if (configuredEndpoint) {
+    return [configuredEndpoint];
+  }
+
+  return ["/api/submit-lead", "/api/submit-lead.php"];
+}
+
+async function submitLead(data: LeadInput) {
+  const endpoints = getSubmitEndpoints();
+  let lastErrorMessage = "Submission failed";
+
+  for (const endpoint of endpoints) {
+    const response = await fetch(endpoint, {
+      method: "POST",
+      headers: { "Content-Type": "application/json", Accept: "application/json" },
+      body: JSON.stringify(data),
+    });
+
+    const payload = await readApiPayload(response.clone());
+
+    if (response.ok && payload?.success) {
+      return;
+    }
+
+    const message = payload?.error || payload?.message || await readResponseMessage(response);
+    lastErrorMessage = message;
+
+    const contentType = response.headers.get("content-type") || "";
+    const canFallback =
+      endpoint.endsWith("/submit-lead") &&
+      (response.status === 404 || response.status === 405 || !contentType.includes("application/json"));
+
+    if (!canFallback) {
+      const error = new Error(message);
+      (error as Error & { status?: number }).status = response.status;
+      throw error;
+    }
+  }
+
+  throw new Error(lastErrorMessage);
 }
 
 export const SignUpForm = () => {
@@ -53,23 +117,7 @@ export const SignUpForm = () => {
     const toastId = toast.loading("Submitting your application...");
 
     try {
-      const response = await fetch("/api/submit-lead", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
-      });
-
-      if (!response.ok) {
-        const message = await readResponseMessage(response);
-
-        if (response.status === 409) {
-          setError("email", { type: "server", message });
-        } else {
-          setSubmitError(message);
-        }
-
-        throw new Error(message);
-      }
+      await submitLead(data);
 
       toast.success("Welcome aboard! Application received.", { id: toastId });
       setShowSuccess(true);
@@ -82,6 +130,13 @@ export const SignUpForm = () => {
       reset();
     } catch (error) {
       const message = error instanceof Error ? error.message : "Something went wrong. Please try again.";
+
+      if ((error as Error & { status?: number })?.status === 409) {
+        setError("email", { type: "server", message });
+      } else {
+        setSubmitError(message);
+      }
+
       toast.error(message, { id: toastId });
     }
   };
