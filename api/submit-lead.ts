@@ -3,8 +3,8 @@ import { Resend } from "resend";
 
 const CRM_WEBHOOK_URL = (process.env.PRIVYR_WEBHOOK_URL || "").trim();
 const RESEND_API_KEY = (process.env.RESEND_API_KEY || "").trim();
-const ADMIN_EMAIL = (process.env.ADMIN_EMAIL || "").trim();
-const FROM_EMAIL = (process.env.FROM_EMAIL || "").trim();
+const ADMIN_EMAIL = (process.env.ADMIN_EMAIL || "goldenheartmarketplace@gmail.com").trim();
+const FROM_EMAIL = (process.env.FROM_EMAIL || "noreply@merchantsgoldenheart.com").trim();
 const COMPANY_NAME = (process.env.SITE_NAME || "GoldenHeart Marketplace").trim();
 
 const resend = RESEND_API_KEY ? new Resend(RESEND_API_KEY) : null;
@@ -305,6 +305,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     });
   }
 
+  const emailResults: { user?: string; admin?: string } = {};
+
   try {
     const displayName = fullName.trim().split(/\s+/)[0] || fullName;
     const privyrPayload = {
@@ -334,17 +336,40 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
     console.log(`[INFO] New lead received for ${businessName}.`);
 
-    // Send confirmation email to user (fire-and-forget, don't block response)
-    sendUserConfirmationEmail({ fullName, businessName, email, businessType, country }).catch((err) =>
-      console.error("[ERROR] User email failed:", err)
-    );
+    // Send confirmation email to user (fire-and-forget, log result)
+    sendUserConfirmationEmail({ fullName, businessName, email, businessType, country })
+      .then(() => {
+        console.log(`[INFO] User confirmation email sent to ${email}`);
+        emailResults.user = "sent";
+      })
+      .catch((err) => {
+        console.error("[ERROR] User email failed:", err);
+        emailResults.user = "failed";
+      });
 
-    // Send notification email to admin (fire-and-forget, don't block response)
-    sendAdminNotificationEmail({ fullName, businessName, email, phone, businessType, country }).catch((err) =>
-      console.error("[ERROR] Admin email failed:", err)
-    );
+    // Send notification email to admin (fire-and-forget, log result)
+    sendAdminNotificationEmail({ fullName, businessName, email, phone, businessType, country })
+      .then(() => {
+        console.log(`[INFO] Admin notification email sent to ${ADMIN_EMAIL}`);
+        emailResults.admin = "sent";
+      })
+      .catch((err) => {
+        console.error("[ERROR] Admin email failed:", err);
+        emailResults.admin = "failed";
+      });
 
-    return res.json({ success: true, message: "Lead submitted successfully" });
+    return res.json({
+      success: true,
+      message: "Lead submitted successfully",
+      debug: {
+        privyr: "sent",
+        notes: !RESEND_API_KEY
+          ? "RESEND_API_KEY not configured - no emails sent"
+          : !isValidEmail(FROM_EMAIL)
+          ? `FROM_EMAIL (${FROM_EMAIL}) is invalid - no emails sent`
+          : undefined,
+      },
+    });
   } catch (error) {
     console.error("[ERROR] Privyr webhook delivery failed.", error);
     return res.status(500).json({
