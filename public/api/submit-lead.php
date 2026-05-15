@@ -110,19 +110,19 @@ function buildAdminEmailHtml(array $lead, string $siteName): string
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <style>
-            body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #0F0E0B; color: #ffffff; padding: 0; margin: 0; }
-            .card { max-width: 600px; margin: 40px auto; background: #1a1a1a; border: 1px solid #333333; border-radius: 16px; overflow: hidden; box-shadow: 0 10px 40px rgba(0,0,0,0.5); }
-            .header { background: #0F0E0B; padding: 32px 40px; border-bottom: 2px solid #B8860B; }
-            .header h1 { margin: 0; font-size: 24px; font-weight: 700; color: #ffffff; letter-spacing: -0.5px; }
+            body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f4f5; color: #333333; padding: 0; margin: 0; }
+            .card { max-width: 600px; margin: 40px auto; background: #ffffff; border: 1px solid #e5e7eb; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+            .header { background: #D4A017; padding: 28px 40px; }
+            .header h1 { margin: 0; font-size: 22px; font-weight: 700; color: #ffffff; }
             .content { padding: 32px 40px; }
             .table { width: 100%; border-collapse: collapse; }
-            .table tr { border-bottom: 1px solid #333333; }
+            .table tr { border-bottom: 1px solid #e5e7eb; }
             .table tr:last-child { border-bottom: none; }
-            .table td { padding: 14px 8px; font-size: 15px; }
-            .table td:first-child { color: #888888; font-weight: 500; width: 45%; vertical-align: top; }
-            .table td:last-child { color: #ffffff; }
-            .footer { background: #0F0E0B; padding: 24px 40px; border-top: 1px solid #333333; text-align: center; }
-            .footer p { margin: 0; font-size: 13px; color: #666666; }
+            .table td { padding: 12px 8px; font-size: 15px; line-height: 1.5; }
+            .table td:first-child { color: #6b7280; font-weight: 600; width: 40%; vertical-align: top; }
+            .table td:last-child { color: #1f2937; }
+            .footer { background: #f9fafb; padding: 20px 40px; border-top: 1px solid #e5e7eb; text-align: center; }
+            .footer p { margin: 0; font-size: 13px; color: #9ca3af; }
         </style>
     </head>
     <body>
@@ -158,21 +158,20 @@ function buildVisitorEmailHtml(array $lead, string $siteName): string
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <style>
-            body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #0F0E0B; color: #ffffff; padding: 0; margin: 0; }
-            .card { max-width: 600px; margin: 40px auto; background: #1a1a1a; border: 1px solid #333333; border-radius: 16px; overflow: hidden; box-shadow: 0 10px 40px rgba(0,0,0,0.5); }
-            .header { background: #0F0E0B; padding: 32px 40px; border-bottom: 2px solid #B8860B; text-align: center; }
-            .header h1 { margin: 0; font-size: 28px; font-weight: 700; color: #B8860B; letter-spacing: -0.5px; }
+            body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f4f5; color: #333333; padding: 0; margin: 0; }
+            .card { max-width: 600px; margin: 40px auto; background: #ffffff; border: 1px solid #e5e7eb; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+            .header { background: #D4A017; padding: 28px 40px; text-align: center; }
+            .header h1 { margin: 0; font-size: 26px; font-weight: 700; color: #ffffff; }
             .content { padding: 32px 40px; }
-            .greeting { font-size: 18px; color: #ffffff; margin-bottom: 16px; }
+            .greeting { font-size: 17px; color: #374151; margin-bottom: 8px; line-height: 1.6; }
             .table { width: 100%; border-collapse: collapse; margin-top: 24px; }
-            .table tr { border-bottom: 1px solid #333333; }
+            .table tr { border-bottom: 1px solid #e5e7eb; }
             .table tr:last-child { border-bottom: none; }
-            .table td { padding: 12px 8px; font-size: 15px; }
-            .table td:first-child { color: #888888; font-weight: 500; width: 45%; }
-            .table td:last-child { color: #ffffff; }
-            .footer { background: #0F0E0B; padding: 24px 40px; border-top: 1px solid #333333; text-align: center; }
-            .footer p { margin: 0 0 8px 0; font-size: 13px; color: #666666; }
-            .divider { height: 1px; background: linear-gradient(90deg, transparent, #333333, transparent); margin: 24px 0; }
+            .table td { padding: 12px 8px; font-size: 15px; line-height: 1.5; }
+            .table td:first-child { color: #6b7280; font-weight: 600; width: 40%; }
+            .table td:last-child { color: #1f2937; }
+            .footer { background: #f9fafb; padding: 20px 40px; border-top: 1px solid #e5e7eb; text-align: center; }
+            .footer p { margin: 0; font-size: 13px; color: #9ca3af; }
         </style>
     </head>
     <body>
@@ -182,7 +181,6 @@ function buildVisitorEmailHtml(array $lead, string $siteName): string
             </div>
             <div class="content">
                 <div class="greeting">We have received your vendor registration interest and will be in touch within 24-48 hours.</div>
-                <div class="divider"></div>
                 <table class="table">
                     <tr><td>Full Name</td><td>' . htmlspecialchars($lead['fullName']) . '</td></tr>
                     <tr><td>Business Name</td><td>' . htmlspecialchars($lead['businessName']) . '</td></tr>
@@ -225,6 +223,12 @@ $ADMIN_EMAIL = envValue('ADMIN_EMAIL', 'goldenheartmarketplace@gmail.com');
 $SITE_NAME = envValue('SITE_NAME', 'GoldenHeart Marketplace');
 $FROM_EMAIL = envValue('FROM_EMAIL', 'noreply@merchantsgoldenheart.com');
 $WEBHOOK_URL = envValue('PRIVYR_WEBHOOK_URL', 'https://www.privyr.com/api/v1/incoming-leads/0vZfjMQw/JSh0Qptn');
+
+// Log if RESEND_API_KEY is missing so we can diagnose
+if ($RESEND_API_KEY === '') {
+    error_log('[LEAD SUBMIT] WARNING: RESEND_API_KEY is not configured. Emails will NOT be sent.');
+    error_log('[LEAD SUBMIT] Create a .env file in the same directory as this script with: RESEND_API_KEY=re_your_key_here');
+}
 
 $input = json_decode(file_get_contents('php://input'), true);
 if (!is_array($input)) {
