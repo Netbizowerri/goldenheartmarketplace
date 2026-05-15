@@ -70,6 +70,7 @@ export const SITE_CONTENT: SiteContent = {
   merchantCategories: [
     "Retail & General Merchants",
     "Restaurants & Food Vendors",
+    "Delivery Services",
     "Fashion & Accessories",
     "Health & Wellness",
     "Beauty & Spa Services",

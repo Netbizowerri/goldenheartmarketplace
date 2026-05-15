@@ -164,6 +164,7 @@ export const SignUpForm = () => {
                 "Secure Wallet & Instant Payouts",
                 "Advanced Sales Analytics",
                 "Priority Merchant Support",
+                "Delivery Services",
               ].map((item, i) => (
                 <motion.div 
                   key={i}

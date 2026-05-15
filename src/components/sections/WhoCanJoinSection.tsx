@@ -12,6 +12,7 @@ const categories = [
   { label: "Skilled Trades", icon: "👷" },
   { label: "Professional Services", icon: "📂" },
   { label: "Home Services", icon: "🧹" },
+  { label: "Delivery Services", icon: "🚚" },
   { label: "Handmade & Crafts", icon: "🧶" },
   { label: "Global Sellers", icon: "🌎" },
 ];
